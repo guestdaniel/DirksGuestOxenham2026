@@ -9,8 +9,6 @@ library(car)
 font_scale=10
 
 # Load data
-#load('/home/daniel/apc_store/pitchbias/data/2020-05-18/clean_data.RData')
-#load('/home/daniel/apc_store/pitchbias/data/2020-05-04/clean_same_diff_data.RData')
 load(file.path('data', 'updown.RData'))
 data_updown = data
 load(file.path('data', 'updown.RData'))
@@ -58,28 +56,28 @@ temp %>%
   # Annotate Unpracticed
   annotate(geom="segment", x=100*(10^(sqrt(2) * 10^(fits[[1]][[1]]$xmin[1]) * qnorm((0.707 - 1/2*(1-fits[[1]][[1]]$xmin[2]))/(fits[[1]][[1]]$xmin[2]))) - 1),
 	  		   xend=100*(10^(sqrt(2) * 10^(fits[[1]][[1]]$xmin[1]) * qnorm((0.707 - 1/2*(1-fits[[1]][[1]]$xmin[2]))/(fits[[1]][[1]]$xmin[2]))) - 1),
-			   y=0.4, yend=0.707, 
+			   y=0.4, yend=0.707,
 			   linetype="dashed",
 			   size=1.0,
 			   color="#F8766D") + 
   # Annotate Practiced 1
   annotate(geom="segment", x=100*(10^(sqrt(2) * 10^(fits[[2]][[1]]$xmin[1]) * qnorm((0.707 - 1/2*(1-fits[[2]][[1]]$xmin[2]))/(fits[[2]][[1]]$xmin[2]))) - 1),
 	  		   xend=100*(10^(sqrt(2) * 10^(fits[[2]][[1]]$xmin[1]) * qnorm((0.707 - 1/2*(1-fits[[2]][[1]]$xmin[2]))/(fits[[2]][[1]]$xmin[2]))) - 1),
-			   y=0.4, yend=0.707, 
+			   y=0.4, yend=0.707,
 			   linetype="dashed",
 			   size=1.0,
 			   color="#7CAE00") + 
   # Annotate Practiced 2
   annotate(geom="segment", x=100*(10^(sqrt(2) * 10^(fits[[3]][[1]]$xmin[1]) * qnorm((0.707 - 1/2*(1-fits[[3]][[1]]$xmin[2]))/(fits[[3]][[1]]$xmin[2]))) - 1),
 	  		   xend=100*(10^(sqrt(2) * 10^(fits[[3]][[1]]$xmin[1]) * qnorm((0.707 - 1/2*(1-fits[[3]][[1]]$xmin[2]))/(fits[[3]][[1]]$xmin[2]))) - 1),
-			   y=0.4, yend=0.707, 
+			   y=0.4, yend=0.707,
 			   linetype="dashed",
 			   size=1.0,
 			   color="#00BFC4") + 
   # Annotate Practiced 3
   annotate(geom="segment", x=100*(10^(sqrt(2) * 10^(fits[[4]][[1]]$xmin[1]) * qnorm((0.707 - 1/2*(1-fits[[4]][[1]]$xmin[2]))/(fits[[4]][[1]]$xmin[2]))) - 1),
 	  		   xend=100*(10^(sqrt(2) * 10^(fits[[4]][[1]]$xmin[1]) * qnorm((0.707 - 1/2*(1-fits[[4]][[1]]$xmin[2]))/(fits[[4]][[1]]$xmin[2]))) - 1),
-			   y=0.4, yend=0.707, 
+			   y=0.4, yend=0.707,
 			   linetype="dashed",
 			   size=1.0,
 			   color="#C77CFF") + 
@@ -103,7 +101,8 @@ temp %>%
         panel.grid.major=element_blank(),                  # Hide panel grids
         panel.grid.minor = element_blank()) +
   # Labels
-  ylim(c(0.4, 1)) + 
+  ylim(c(0.4, 1)) +
+	scale_y_continuous(expand=c(0, 0)) +
   labs(x="Frequency Difference (%)", 
        y="Proportion Correct", 
        color="Tone Order", 
