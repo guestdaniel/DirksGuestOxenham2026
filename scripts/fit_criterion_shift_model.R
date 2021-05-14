@@ -1,0 +1,137 @@
+fit_criterion_model <- function(data_updown, data_samediff, version=1, starting_vals=c(3, 0, 0, 0.75, 0)) {
+# Fit sensory bias model to data
+#
+# Arguments:
+# 	data_updown (data.frame): data from the up-down discrimination experiment (output of preprocess_updown_data.R)
+# 	data_samediff (data.frame): data from the same-diff discrimination experiment (output of preprocess_samediff.R)
+#	version (int): which version of the model to fit
+# 		1: k = 0 (no criterion shift), b = 3 (perceived mean of range = 1000), fix performance during inattention at 0.5
+# 			free parameters = (3) (4), exclude (5)
+# 		2: allow k to vary, fix slope at 1000 Hz, fix performance during inattention at 0.5
+# 			free parameters = (1) (3) (4), exclude (5)
+# 		3: allow k and perceived mean to vary, fix performance during inattention at 0.5
+# 			free parameters = (1) (2) (3) (4), exclude (5)
+# 		4: change performance during inattention to answering wrong question, fix perceived mean at 1000 Hz or b = 3
+# 			free parameters = (1) (3) (4) (5)
+# 		5: let all variables be free parameters
+# 			free parameters = (1) (2) (3) (4) (5)
+# 	starting_vals (numeric vector):  initial values for parameters in estimation procedure
+#
+# Returns:
+# (list): contains two elements, first is the output of pracma::fminsearch and second is data.frame with data 
+#	  and prediction
+
+# Create "second_correct" variable as numeric analogue of sign variable
+data_updown[data_updown$sign == "High-Low", "second_correct"] = -1
+data_updown[data_updown$sign == "Low-High", "second_correct"] = 1
+# Label experiments and transform freq_diff into a numeric()
+data_updown$experiment = "updown"
+data_updown$freq_diff = as.numeric(as.character(data_updown$freq_diff))
+data_samediff$experiment = "samediff"
+# Bind updown and samediff data together
+data = bind_rows(data_updown, data_samediff)
+
+# Log transform frequency values in data_updown and data_samediff
+data$tone_freq_int1 = log10(data$tone_freq_int1)
+data$tone_freq_int2 = log10(data$tone_freq_int2)
+
+# Define starting value and bounds bounds on free parameters:
+# 	(1) perceived mean of frequencies, log10[Hz], (-infty, infty)
+# 	(2) slope of the bias/criterion line, linear, (-infty, infty)
+# 	(3) frequency difference limen or discrimination threshold, log10(f'/f), (-infty, infty)
+# 	(4) proportion of time not attending to the task, proportion, (0, 1)
+# 	(5) discrimination threshold for the wrong question (whether tone pair above or below the mean), log10(f'/f) ? 
+
+# free parameters
+if (version == 5) { # Everything is free
+  lower = c(1, -2, -3, 0.7, -3)
+  upper = c(5, 2, 1, 1, 6)
+} else if (version == 4) { # Fix perceived mean, let criterion shift happen, answering wrong question
+  lower = c(3, -2, -3, 0.7, -3)
+  upper = c(3, 2, 1, 1, 6)
+} else if (version == 3) { # Allow mean and k to vary, fix performance at chance during inattention
+  lower = c(2, -0.1, -3, 0.7, 0)
+  upper = c(4, 0.1, 1, 1, 0)
+} else if (version == 2) { # Fix perceived mean, fix performance at chance during inattention, let k vary
+  lower = c(3, -2, -3, 0.7, 0)
+  upper = c(3, 2, 1, 1, 0)
+} else if (version == 1) { # Fix perceived mean, no criterion shift (k = 0), fix performance at chance during inattention
+  lower = c(3, 0, -3, 0.7, 0)
+  upper = c(3, 0, 1, 1, 0)    
+} else {
+  print("That's not a version!")
+}
+# Define function that implements model
+model_fun <- function(p, data, version, switch) {
+	#########################################
+	# Handle up-down data first		    #
+	#########################################
+	data_updown = data[data$experiment == "updown", ]
+	# First, calculate criterion shift based on position of frequency pair in rove range
+	criterion_shift = (10^((data_updown$tone_freq_int2+data_updown$tone_freq_int1)/2)-10^p[1])*p[2]
+	# Second, calculate the perceived interval difference between f2 and f1
+	internal_difference = (data_updown$tone_freq_int2-data_updown$tone_freq_int1)
+	# Third, normalize that difference by the sensitivity to f2-f1
+	internal_difference = internal_difference/(10^p[3])/sqrt(2)
+	# Fourth, calculate the perceived internal difference between mean of f2 and f1
+	internal_difference_mean = (1/2*(data_updown$tone_freq_int2+data_updown$tone_freq_int1)-p[1])
+	# Fifth, normalize that difference by the sensitivity to deviance from mean f
+	internal_difference_mean = internal_difference_mean/(10^p[5])/sqrt(2)
+	# Calculate y_hat as mixture of percent correct from correct question answering and incorrect question answering
+	if (version == 2 | version == 1) {
+	y_hat_updown = p[4]*pnorm(data_updown$second_correct*criterion_shift + data_updown$second_correct*internal_difference) + (1-p[4])*0.5
+	} else {
+	y_hat_updown = p[4]*pnorm(data_updown$second_correct*criterion_shift + data_updown$second_correct*internal_difference) + (1-p[4])*pnorm(data_updown$second_correct*internal_difference_mean)
+	}
+
+	#########################################
+	# Handle same-diff data 		    #
+	#########################################
+	data_samediff = data[data$experiment == "samediff", ]
+	# First, calculate the perceived interval difference between f2 and f1
+	internal_difference = (data_samediff$tone_freq_int2-data_samediff$tone_freq_int1)
+	# Second, normalize that difference by the sensitivity to f2-f1
+	internal_difference = internal_difference/(10^p[3])/sqrt(2)
+	# Next, calculate k
+	k = numeric(length(internal_difference))
+	k[data_samediff$freq_diff == 0.5] = 0.002534/10**(p[3])/sqrt(2)
+	k[data_samediff$freq_diff == 1.0] = 0.002855/10**(p[3])/sqrt(2)
+	k[data_samediff$freq_diff == 2.0] = 0.003600/10**(p[3])/sqrt(2)
+	k[data_samediff$freq_diff == 3.0] = 0.004221/10**(p[3])/sqrt(2)
+	k_same = k[data_samediff$trial_type == "same tones"]
+	k_diff = k[data_samediff$trial_type != "same tones"]
+	# Calculate y_hat as mixture of percent correct from correct question answering and incorrect question answering
+	internal_difference_same = internal_difference[data_samediff$trial_type == "same tones"]
+	internal_difference_diff = internal_difference[data_samediff$trial_type != "same tones"]
+	y_hat_same = p[4]*(pnorm(internal_difference_same + k_same) - pnorm(internal_difference_same - k_same)) +
+		(1-p[4])*(0.5)
+	y_hat_diff = p[4]*(1 - pnorm(internal_difference_diff + k_diff) + pnorm(internal_difference_diff - k_diff)) +
+		(1-p[4])*(0.5)
+	y_hat_samediff = numeric(nrow(data_samediff))
+	y_hat_samediff[data_samediff$trial_type == "same tones"] = y_hat_same
+	y_hat_samediff[data_samediff$trial_type != "same tones"] = y_hat_diff
+
+	#########################################
+	# Combine up-down and samediff 		#
+	#########################################
+	y = data$num_correct/data$num_trials
+	y_hat = c(y_hat_updown, y_hat_samediff)
+
+	# Return SSE
+	if (switch == 1) {
+		return(sum((y - y_hat)^2))
+	} else {
+		return(y_hat)
+	}
+}
+
+# Estimate model fit to data
+fitted = pracma::fminsearch(fn=model_fun, x0=starting_vals, data=data, version=version, switch=1, lower=lower, upper=upper, method="Hooke-Jeeves")
+
+# Extract y_hat from model with fitted parameters
+y_hat = model_fun(fitted$xmin, data, version=version, switch=2)
+data$y_hat = y_hat
+
+# Return results
+return(list(fitted, data))
+}

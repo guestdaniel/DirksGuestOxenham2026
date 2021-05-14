@@ -1,0 +1,9 @@
+[0] Config.pm:302> INFO - This is Biber 2.9
+[0] Config.pm:305> INFO - Logfile is 'equations.blg'
+[16] biber:313> INFO - === Fri Jul 24, 2020, 12:05:24
+[28] Biber.pm:371> INFO - Reading 'equations.bcf'
+[66] Biber.pm:857> INFO - Found 0 citekeys in bib section 0
+[70] Utils.pm:169> WARN - The file 'equations.bcf' does not contain any citations!
+[74] bbl.pm:617> INFO - Writing 'equations.bbl' with encoding 'UTF-8'
+[74] bbl.pm:720> INFO - Output to equations.bbl
+[74] Biber.pm:110> INFO - WARNINGS: 1
