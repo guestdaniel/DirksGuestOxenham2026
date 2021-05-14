@@ -35,4 +35,5 @@ Behavioral data analyses can be reproduced by running the `.R` scripts in `nofig
 - Figure 1: Run `fig1/fig1.R`, output plot is saved as `figs/fig1.png`
 - Figure 2: Run `fig2/fig2.R`, plot is saved as `figs/fig2.png`
 - Figure 3: Run `fig3/fig3.R`, plot is saved as `figs/fig3.png`
-- Figure 4: Run `fig3/llalalalaal`
+- Figure 4: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig4/fig4.R`, the plot is saved in `figs/fig4.png`. 
+- Figure 4: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig5/fig5.R`, the plot is saved in `figs/fig5.png`. 
