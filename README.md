@@ -41,17 +41,17 @@ The MATLAB code used to collect behavioral responses is available compressed int
 
 You will need to install R to run the code in this repository. We tested on R 3.6.0 and R 4.0.3, but in theory any sufficiently recent version of R should suffice. The following packages are required (with recommended versions based on our install of R 4.0.3 in parentheses):
 
-- `dplyr`
-- `tidyr`
-- `pracma`
-- `ggplot2`
-- `lme4`
-- `car`
-- `nlme`
-- `merTools`
-- `optimx`
-- `phia`
-- `effects`
+- `dplyr` (1.0.5)
+- `tidyr` (1.1.2)
+- `pracma` (2.2.9)
+- `ggplot2` (3.3.3)
+- `lme4` (1.1-25)
+- `car` (3.0-10)
+- `nlme` (3.1-149)
+- `merTools` (0.5.2)
+- `optimx` (2020-4.2)
+- `phia` (0.2-1)
+- `effects` (4.2-0)
 
 ### Behavioral data analyses
 
