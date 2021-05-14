@@ -1,6 +1,6 @@
 # DirksGuestOxenham2021
 
-This repository contains all code necessary for completely reproducing the analyses and figures in Dirks, Guest, and Oxenham (2021), in preparation. The entire codebase is in R. With a properly configured R interpreter, the entire manuscript can be reproduced with a single `run.sh` shell script.
+This repository contains all code necessary for completely reproducing the analyses and figures in Dirks, Guest, and Oxenham (2021), in preparation. The entire codebase is in R. With a properly configured R interpreter, the entire manuscript can be reproduced with a single `run.sh` shell script. We also provide a Docker image with a properly configured environment to enable users and readers to reproduce the manuscript with minimal impact on their own systems. Instructions for both a manual installation and using the Docker image are available below.
 
 The code in this repository is licensed under GNU GPLv3 (see `LICENSE.txt`).
 
@@ -35,9 +35,46 @@ Preprocessed behavioral data are available separately at [Zenodo](link). The `.R
 
 The MATLAB code used to collect behavioral responses is available compressed into a single `.zip` file. This code depends on MATLAB and on the [`afc`](http://medi.uni-oldenburg.de/afc/) package and is not thoroughly documented. 
 
-## Instructions
+## Instructions (Docker)
 
-### Installation
+Docker is our recommended solution for replicating the results from Dirks, Guest, and Oxenham (2021). If you are unfamiliar with Docker, you may want to [orient yourself](https://docs.docker.com/get-started/). The Docker image associated with this repository will allow you to start up a Linux container with R, all required packages/programs, and a copy of this repository. Inside this environment, which is sandboxed from the rest of your system, you can replicate the results of our paper with a single command. When you are done with this process and leave the environment, the environment will clean itself up and stop consuming system resources. The major advantage of using Docker in this way is that you do not have to install Python, R, or any other programs yourself.
+
+To get started, make sure you have [Docker installed](https://docs.docker.com/get-docker/). Then, follow the instructions below. The instructions below are written for command line interface (such as PowerShell and Terminal) but equivalent commands likely exist in graphical user interface versions of the Docker software.
+
+First, pull the image from our GitHub repository.
+
+```
+docker pull docker.pkg.github.com/guestdaniel/dirksguestoxenham2021/dirksguestoxenham2021:0.1.0
+```
+
+Next, use the image to create an interactive container.
+
+```
+docker run --rm -it dirksguestoxenham2021
+```
+
+- `--rm` flag tells Docker to "clean up" after itself and to remove any files generated while running the image after the container is closed
+- `-it` tells Docker this is an interactive session 
+
+This container starts with an interactive bash shell located in a copy of the present repository. From there, you can either manually run individual scripts using the `Rscript` command (e.g., `Rscript fig1/fig1.R` to generate Figure 1), or you can generate the all the figures in the paper via:
+
+```
+bash run.sh
+```
+
+Note that this may take quite some time, as this shell script runs all of the analyses in the manuscript, including some rather computationally expensive mixed models.
+
+However, the figures will be saved out to the container's non-persistent storage and will be destroyed when you exit or end the container. To have permanent copies of the outputs figures saved to your disk, you can link the output `figs` directory inside the container to a preferred output location somewhere on your disk. First, exit the container with the `exit` command, then run the following:
+
+```
+docker run --rm -v /home/daniel/DirksGuestOxenham2021/figs:/DirksGuestOxenham2021/plots -it dirksguestoxenham2021
+```
+
+- `-v` flag tells Docker to link the `figs` folder on your disk (path to the left of `:`) with the `figs` folder in the container (path to the right of `:`). Obviously, you will need to adjust the path on the left to point to wherever you have stored your local copy of the repository.
+
+Now, if you call `run.sh` or any of the individual plotting files (e.g., `fig1.R`), whatever is saved in the `figs` folder of the repository will be accessible on your hard drive (outside of the container) in the `figs` folder of this repository. This process can be repeated, if desired, for the `outputs` folder to capture the saved model fit objects and statistical reports. 
+
+## Instructions (manual)
 
 You will need to install R to run the code in this repository. We tested on R 3.6.0 and R 4.0.3, but in theory any sufficiently recent version of R should suffice. The following packages are required (with recommended versions based on our install of R 4.0.3 in parentheses):
 
@@ -53,6 +90,8 @@ You will need to install R to run the code in this repository. We tested on R 3.
 - `phia` (0.2-1)
 - `effects` (4.2-0)
 
+## Reproducing the paper
+
 ### Behavioral data analyses
 
 Behavioral data analyses can be reproduced by running the `.R` scripts in `nofig/stats`. Results are saved out as `.png` and `.txt` files in the `outputs` folder. These files have names starting with `statsmodel_abc...` where `abc` is either `jnd`, `updown`, or `samediff`. `jnd` refers to the analyses of estimated JNDs reported in the beginning of the manuscript near Figure 1. `updown` and `samediff` refer to analyses of those tasks near Figures 2 and 3. 
@@ -65,3 +104,7 @@ Behavioral data analyses can be reproduced by running the `.R` scripts in `nofig
 - Figure 4: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig4/fig4.R`, the plot is saved in `figs/fig4.png`. 
 - Figure 5: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig5/fig5.R`, the plot is saved in `figs/fig5.png`. 
 - Figure 6: Run `nofig/comp_models/bootstrap_comp_models.R`, then run `fig6/fig6.R`. The subplots are saved in `figs/fig6a.png`, `figs/fig6b.png`, and so on. These subplots are combined in Inkscape to yield `figs/fig6.png`. 
+
+### Shell script
+
+`run.sh` in the top-level directory of the repository provides a shell script that should (probably) run on most POSIX-compliant shells. When run from this directory, the script will download and unpack the behavioral data from Zenodo, run all necessary behavioral and computational analyses, and generate all figures in the manuscript. 
