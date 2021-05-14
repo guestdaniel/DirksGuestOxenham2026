@@ -11,8 +11,6 @@ font_scale=10
 # Load data
 load(file.path('data', 'updown.RData'))
 data_updown = data
-load(file.path('data', 'updown.RData'))
-data_samediff = data
 source('scripts/fit_jnd.R')
 
 # Relabel levels of practice
