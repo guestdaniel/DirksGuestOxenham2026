@@ -8,37 +8,11 @@ library(nlme)
 library(phia)
 options(contrasts=c("contr.sum","contr.poly"))
 
-# Set settings
-font_scale=10
-
 # Load data
-# Configure directories
-if (Sys.info()['nodename'] == 'daniel-desktop'){
-  load('/home/daniel/apc_store/pitchbias/data/2020-05-18/clean_data.RData')
-  data_updown = data
-  load('/home/daniel/apc_store/pitchbias/data/2020-05-04/clean_same_diff_data.RData')
-  data_samediff = data
-  data_dir = '~/apc_store/pitchbias/data'
-  model_dir = '~/apc_store/pitchbias/model/jnd'
-  source('~/pitchbias/fit_jnd.R')
-} else if (Sys.info()["nodename"] == 'Ethans-MacBook-Air.local') {
-  load('/Users/Ethan/Documents/GitHub/pitchbias/data/2020-06-12/clean_data.RData')
-  data_updown = data
-  load('/Users/Ethan/Documents/GitHub/pitchbias/data/2020-06-12/clean_same_diff_data.RData')
-  data_samediff = data
-  data_dir = '/Users/Ethan/Documents/GitHub/pitchbias/data'
-  model_dir = '/Users/Ethan/Documents/GitHub/pitchbias/model/jnd'
-  setwd('/Users/Ethan/Documents/GitHub/pitchbias')
-} else {
-  
-}
-
-# Create model directory
-model_dir = file.path(model_dir, Sys.Date())
-dir.create(model_dir, recursive=TRUE)
+load(file.path('data', 'updown.RData'))
 
 # Make a new data frame with columns of subject, test session, target tone, and estimated JND
-newdf = data_updown %>% 
+newdf = data %>%
   select(subj, practice, TargetTone) %>%
   unique()
 newdf$alpha = NaN
@@ -65,9 +39,8 @@ tests_h1 = testInteractions(lm_mod, pairwise="practice", adjustment="holm", test
 # alpha_1 are in log units, we have log(JND_2) - log(JND_1) = log(JND_2/JND_1)... exponentiate to get ratio of JNDs)
 tests_h1$Value = 10^(tests_h1$Value) # transform Value into ratio instead of log10(ratio) == log10(alpha_2) - log10(alpha_1)
 
-# Output to disk
 # Report analyses
-sink(file.path(model_dir, "results.txt"))
+sink(file.path('outputs', "statsmodel_jnd_results.txt"))
 lm_mod
 print('')
 lm_mod_anova

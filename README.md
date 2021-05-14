@@ -10,21 +10,23 @@ The file structure of this repository is shown in the file hierarchy below. Code
 
 ```
 .  
-├── data                     # Behavioral data goes here!
-├── equations                # LaTeX and PDF output of brief explanation of model equations
-├── fig1                     # Code for Figure 1
+├── data/                    # Behavioral data goes here!
+├── equations/               # LaTeX and PDF output of brief explanation of model equations
+├── fig1 /                   # Code for Figure 1
 ├── ...  
-├── fig6                     # Code for Figure 6
-├── figs                     # .png files of manuscript figures
+├── fig6/                    # Code for Figure 6
+├── figs/                    # .png files of manuscript figures
 ├── nofig                    # Code that is needed but is not directly featured in a single manuscript figure
 │   ├── comp_models          # Fit computational models to the behavioral data
 │   ├── data                 # Preprocess the behavioral data
 │   └── stats                # Analyze the behavioral data
-├── ouiputs                  # Saved copies of fitted model objects, statistical tests, etc.
-├── scripts                  # Scripts or function definitions called by other files
+├── outputs/                 # Saved copies of fitted model objects, statistical tests, etc.
+├── scripts/                 # Scripts or function definitions called by other files
+├── config.R                 # Sourced by some .R scripts to access repostiory-wide parameters (e.g., font size)
 ├── Dockerfile               # Dockerfile used to generate Docker image
 ├── LICENSE                  # License file for the code contained in this repository
-└── README.md                # This README file
+├── README.md                # This README file
+└── run.sh                   # Shell script to reproduce figures and analyses
 ```
 
 ## Behavioral data
@@ -53,7 +55,7 @@ You will need to install R to run the code in this repository. We tested on R 3.
 
 ### Behavioral data analyses
 
-Behavioral data analyses can be reproduced by running the `.R` scripts in `nofig/stats`. Results are saved out as `.txt` files in the same folder.
+Behavioral data analyses can be reproduced by running the `.R` scripts in `nofig/stats`. Results are saved out as `.png` and `.txt` files in the `outputs` folder. These files have names starting with `statsmodel_abc...` where `abc` is either `jnd`, `updown`, or `samediff`. `jnd` refers to the analyses of estimated JNDs reported in the beginning of the manuscript near Figure 1. `updown` and `samediff` refer to analyses of those tasks near Figures 2 and 3. 
 
 ### Figures
 
@@ -61,4 +63,5 @@ Behavioral data analyses can be reproduced by running the `.R` scripts in `nofig
 - Figure 2: Run `fig2/fig2.R`, plot is saved as `figs/fig2.png`
 - Figure 3: Run `fig3/fig3.R`, plot is saved as `figs/fig3.png`
 - Figure 4: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig4/fig4.R`, the plot is saved in `figs/fig4.png`. 
-- Figure 4: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig5/fig5.R`, the plot is saved in `figs/fig5.png`. 
+- Figure 5: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig5/fig5.R`, the plot is saved in `figs/fig5.png`. 
+- Figure 6: Run `nofig/comp_models/bootstrap_comp_models.R`, then run `fig6/fig6.R`. The subplots are saved in `figs/fig6a.png`, `figs/fig6b.png`, and so on. These subplots are combined in Inkscape to yield `figs/fig6.png`. 

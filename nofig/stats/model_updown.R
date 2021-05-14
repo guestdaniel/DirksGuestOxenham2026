@@ -11,23 +11,8 @@ library(optimx)
 # Configure contrast settings
 options(contrasts=c("contr.sum","contr.poly"))
 
-# Configure directories
-if (Sys.info()['nodename'] == 'daniel-desktop'){
-	data_dir = '/home/daniel/apc_store/pitchbias/data'
-	model_dir = '/home/daniel/apc_store/pitchbias/model/updown'
-} else if (Sys.info()["nodename"] == 'Ethans-MacBook-Air.local') {
-  data_dir = '/Users/Ethan/Documents/GitHub/pitchbias/data'
-  model_dir = '/Users/Ethan/Documents/GitHub/pitchbias/model/updown'
-  setwd('/Users/Ethan/Documents/GitHub/pitchbias')
-} else {
-  
-}
-model_dir = file.path(model_dir, Sys.Date())
-dir.create(model_dir, recursive=TRUE)
-
 # Load data
-data_dir = file.path(data_dir, max(list.files(data_dir)))
-load(file.path(data_dir, "clean_data.RData"))
+load(file.path('data', 'updown.RData'))
 
 # Prep the model data
 model_data = data %>%
@@ -90,7 +75,7 @@ for (ii in 1:7) {
 	# Extract model
 	mod = models[[ii]]
 	# Create model subdirectory
-	model_dir_sub = file.path(model_dir, paste0('model_', as.character(ii)))
+	model_dir_sub = file.path('outputs', paste0('statsmodel_updown_', as.character(ii)))
 	dir.create(model_dir_sub, recursive=TRUE)
 
 	# Create model fit plots
@@ -180,7 +165,7 @@ labels = c('Unpracticed',
 	   'Joint');
 
 # Report analyses
-sink(file.path(model_dir, "results.txt"))
+sink(file.path('outputs', "statsmodel_updown_results.txt"))
 # Report ANOVA
 print('#####################################################################################')
 print('Per-model ANOVA, Wald Chisq test, corrected by Holm-Bonferroni')
