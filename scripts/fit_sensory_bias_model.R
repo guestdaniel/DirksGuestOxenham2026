@@ -59,7 +59,7 @@ if (version == 4) { # Everything is free
 # Define function that implements model
 model_fun <- function(p, data, version, switch) {
 	#########################################
-	# Handle up-down data first 		#
+	# Handle up-down data first 		    #
 	#########################################
 	data_updown = data[data$experiment == "updown", ]
 	# First, calculate the perceived difference between f2 and f1
@@ -72,26 +72,22 @@ model_fun <- function(p, data, version, switch) {
 	internal_difference_mean = internal_difference_mean/(10^p[5])/sqrt(2)
 	# Calculate y_hat as mixture of percent correct from correct question answering and incorrect question answering
 	if (version == 2 | version == 1) {
-		y_hat_updown = p[4]*pnorm(data_updown$second_correct*internal_difference) + (1-p[4])*0.5
+		y_hat_updown = (1-p[4])*pnorm(data_updown$second_correct*internal_difference) + p[4]*0.5
 	} else {
-		y_hat_updown = p[4]*pnorm(data_updown$second_correct*internal_difference) + (1-p[4])*pnorm(data_updown$second_correct*internal_difference_mean)
+		y_hat_updown = (1-p[4])*pnorm(data_updown$second_correct*internal_difference) + p[4]*pnorm(data_updown$second_correct*internal_difference_mean)
 	}
 
 	#########################################
-	# Handle same-diff data 		#
+	# Handle same-diff data 		        #
 	#########################################
 	data_samediff = data[data$experiment == "samediff", ]
 	# First, calculate the perceived interval difference between f2 and f1
 	internal_difference = (data_samediff$tone_freq_int2-data_samediff$tone_freq_int1-p[2]*(p[1]-data_samediff$tone_freq_int1))
 	# Normalize that difference by the sensitivity to f2-f1
 	internal_difference = internal_difference/(10^p[3])/sqrt(2)
-	# Next, calculate k (TODO: from WHAT?! explain how k was calculated)
+	# Next, calculate k
 	k = numeric(length(internal_difference))
 	temp = data_samediff %>% group_by(freq_diff) %>% filter(trial_type == 'same tones') %>% summarize(FA = 1 - sum(num_correct)/sum(num_trials)) %>% mutate(tau = -sqrt(2) * qnorm(FA/2))
-	#k[data_samediff$freq_diff == 0.5] = 0.002534/10**(p[3])/sqrt(2)
-	#k[data_samediff$freq_diff == 1.0] = 0.002855/10**(p[3])/sqrt(2)
-	#k[data_samediff$freq_diff == 2.0] = 0.003600/10**(p[3])/sqrt(2)
-	#k[data_samediff$freq_diff == 3.0] = 0.004221/10**(p[3])/sqrt(2)
 	k[data_samediff$freq_diff == 0.5] = temp[1,]$tau/sqrt(2)
 	k[data_samediff$freq_diff == 1.0] = temp[2,]$tau/sqrt(2)
 	k[data_samediff$freq_diff == 2.0] = temp[3,]$tau/sqrt(2)
@@ -101,10 +97,10 @@ model_fun <- function(p, data, version, switch) {
 	# Calculate y_hat as mixture of percent correct from correct question answering and incorrect question answering
 	internal_difference_same = internal_difference[data_samediff$trial_type == "same tones"]
 	internal_difference_diff = internal_difference[data_samediff$trial_type != "same tones"]
-	y_hat_same = p[4]*(pnorm(internal_difference_same + k_same) - pnorm(internal_difference_same - k_same)) +
-		(1-p[4])*(0.5)
-	y_hat_diff = p[4]*(1 - pnorm(internal_difference_diff + k_diff) + pnorm(internal_difference_diff - k_diff)) +
-		(1-p[4])*(0.5)
+	y_hat_same = (1-p[4])*(pnorm(internal_difference_same + k_same) - pnorm(internal_difference_same - k_same)) +
+		p[4]*(0.5)
+	y_hat_diff = (1-p[4])*(1 - pnorm(internal_difference_diff + k_diff) + pnorm(internal_difference_diff - k_diff)) +
+		p[4]*(0.5)
 	y_hat_samediff = numeric(nrow(data_samediff))
 	y_hat_samediff[data_samediff$trial_type == "same tones"] = y_hat_same
 	y_hat_samediff[data_samediff$trial_type != "same tones"] = y_hat_diff

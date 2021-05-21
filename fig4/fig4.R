@@ -2,6 +2,7 @@ library(dplyr)
 library(tidyr)
 library(pracma)
 library(ggplot2)
+source('config.R')
 
 # Set settings
 font_scale=8
@@ -41,7 +42,9 @@ temp = temp %>%
 	group_by(src, supername, center_freq, freq_diff, sign, subj) %>%
 	summarize(p_corr=mean(value)) %>%
 	group_by(src, supername, center_freq, freq_diff, sign) %>%
-	summarize(p_corr_error=sd(p_corr)/sqrt(n()), p_corr=mean(p_corr))
+	summarize(p_corr_error=sd(p_corr)/sqrt(n()), p_corr=mean(p_corr)) %>%
+	mutate(freq_diff=factor(freq_diff, levels=c('0', '0.5', '0.75', '1', '1.5', '2', '5'),
+	                        labels=c('0%', '0.5%', '0.75%', '1%', '1.5%', '2%', '5%')))
 temp %>% ggplot(aes(x=center_freq, y=p_corr, color=sign, ymin=p_corr-p_corr_error, ymax=p_corr+p_corr_error, linetype=src)) + 
 		geom_point(data=temp[temp$src == "Behavior", ]) +
 		geom_errorbar(width=0.15, linetype=1) + 
@@ -69,4 +72,4 @@ temp %>% ggplot(aes(x=center_freq, y=p_corr, color=sign, ymin=p_corr-p_corr_erro
 		     y="Proportion Correct", 
 		     color="Tone Order", 
 		     linetype="Source")
-ggsave(file.path('figs', 'fig4.png'), width=8, height=3)
+ggsave(file.path('figs', 'fig4.png'), width=font_scale*0.75, height=font_scale*0.3)

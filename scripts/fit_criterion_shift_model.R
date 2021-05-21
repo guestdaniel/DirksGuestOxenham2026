@@ -79,9 +79,9 @@ model_fun <- function(p, data, version, switch) {
 	internal_difference_mean = internal_difference_mean/(10^p[5])/sqrt(2)
 	# Calculate y_hat as mixture of percent correct from correct question answering and incorrect question answering
 	if (version == 2 | version == 1) {
-	y_hat_updown = p[4]*pnorm(data_updown$second_correct*criterion_shift + data_updown$second_correct*internal_difference) + (1-p[4])*0.5
+	y_hat_updown = (1-p[4])*pnorm(data_updown$second_correct*criterion_shift + data_updown$second_correct*internal_difference) + p[4]*0.5
 	} else {
-	y_hat_updown = p[4]*pnorm(data_updown$second_correct*criterion_shift + data_updown$second_correct*internal_difference) + (1-p[4])*pnorm(data_updown$second_correct*internal_difference_mean)
+	y_hat_updown = (1-p[4])*pnorm(data_updown$second_correct*criterion_shift + data_updown$second_correct*internal_difference) + p[4]*pnorm(data_updown$second_correct*internal_difference_mean)
 	}
 
 	#########################################
@@ -94,19 +94,19 @@ model_fun <- function(p, data, version, switch) {
 	internal_difference = internal_difference/(10^p[3])/sqrt(2)
 	# Next, calculate k
 	k = numeric(length(internal_difference))
-	k[data_samediff$freq_diff == 0.5] = 0.002534/10**(p[3])/sqrt(2)
-	k[data_samediff$freq_diff == 1.0] = 0.002855/10**(p[3])/sqrt(2)
-	k[data_samediff$freq_diff == 2.0] = 0.003600/10**(p[3])/sqrt(2)
-	k[data_samediff$freq_diff == 3.0] = 0.004221/10**(p[3])/sqrt(2)
+	k[data_samediff$freq_diff == 0.5] = 0.002534/10^(p[3])/sqrt(2)
+	k[data_samediff$freq_diff == 1.0] = 0.002855/10^(p[3])/sqrt(2)
+	k[data_samediff$freq_diff == 2.0] = 0.003600/10^(p[3])/sqrt(2)
+	k[data_samediff$freq_diff == 3.0] = 0.004221/10^(p[3])/sqrt(2)
 	k_same = k[data_samediff$trial_type == "same tones"]
 	k_diff = k[data_samediff$trial_type != "same tones"]
 	# Calculate y_hat as mixture of percent correct from correct question answering and incorrect question answering
 	internal_difference_same = internal_difference[data_samediff$trial_type == "same tones"]
 	internal_difference_diff = internal_difference[data_samediff$trial_type != "same tones"]
-	y_hat_same = p[4]*(pnorm(internal_difference_same + k_same) - pnorm(internal_difference_same - k_same)) +
-		(1-p[4])*(0.5)
-	y_hat_diff = p[4]*(1 - pnorm(internal_difference_diff + k_diff) + pnorm(internal_difference_diff - k_diff)) +
-		(1-p[4])*(0.5)
+	y_hat_same = (1-p[4])*(pnorm(internal_difference_same + k_same) - pnorm(internal_difference_same - k_same)) +
+		p[4]*(0.5)
+	y_hat_diff = (1-p[4])*(1 - pnorm(internal_difference_diff + k_diff) + pnorm(internal_difference_diff - k_diff)) +
+		p[4]*(0.5)
 	y_hat_samediff = numeric(nrow(data_samediff))
 	y_hat_samediff[data_samediff$trial_type == "same tones"] = y_hat_same
 	y_hat_samediff[data_samediff$trial_type != "same tones"] = y_hat_diff

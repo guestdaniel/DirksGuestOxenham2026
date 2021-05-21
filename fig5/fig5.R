@@ -41,11 +41,12 @@ temp = temp %>%
 	group_by(src, supername, center_freq, freq_diff, trial_type, subj) %>%
 	summarize(p_corr=mean(value)) %>%
 	group_by(src, supername, center_freq, freq_diff, trial_type) %>%
-	summarize(p_corr_error=sd(p_corr)/sqrt(n()), p_corr=mean(p_corr))
+	summarize(p_corr_error=sd(p_corr)/sqrt(n()), p_corr=mean(p_corr)) %>%
+	mutate(freq_diff=factor(freq_diff, levels=c('0.5', '1', '2', '3'), labels=c('0.5%', '1%', '2%', '3%')))
 temp %>%
 	ggplot(aes(x=center_freq, y=p_corr, color=trial_type, ymin=p_corr-p_corr_error, ymax=p_corr+p_corr_error, linetype=src, shape=trial_type, group=interaction(trial_type, src))) +
 		geom_point(data=temp[temp$src == "Behavior", ]) +
-		#geom_errorbar(data=temp[temp$src == "Behavior", ], width=0.15, linetype=1) +
+		geom_errorbar(data=temp[temp$src == "Behavior", ], width=0.15, linetype=1) +
 		geom_line(data=temp[temp$supername == "Model", ]) +
 		facet_grid(. ~ freq_diff) +
 		# Themes
@@ -72,4 +73,4 @@ temp %>%
 		     color="Tone Order",
 		     linetype="Source",
 		     shape="Tone Order")
-ggsave(file.path('figs', 'fig5.png'), width=6, height=3)
+ggsave(file.path('figs', 'fig5.png'), width=font_scale*0.75, height=font_scale*0.3)

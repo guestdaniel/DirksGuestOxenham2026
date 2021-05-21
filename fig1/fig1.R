@@ -4,9 +4,7 @@ library(pracma)
 library(ggplot2)
 library(lme4)
 library(car)
-
-# Set settings
-font_scale=10
+source('config.R')
 
 # Load data
 load(file.path('data', 'updown.RData'))
@@ -103,9 +101,9 @@ temp %>%
 	scale_y_continuous(expand=c(0, 0)) +
   labs(x="Frequency Difference (%)", 
        y="Proportion Correct", 
-       color="Tone Order", 
+       color="Session",
        linetype="Source",
        shape="Source")
 
 # Save to disk
-ggsave(file.path('figs', 'fig1.png'), width=8, height=6)
+ggsave(file.path('figs', 'fig1.png'), width=font_scale*0.5, height=font_scale*0.3)

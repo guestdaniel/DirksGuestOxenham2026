@@ -1,1 +1,1 @@
-font_scale = 10
+font_scale = 14

@@ -1,6 +1,7 @@
 # Libraries
 library(ggplot2)
 library(dplyr)
+source('config.R')
 
 # Save some variables to control details in plot
 font_scale = 8
@@ -11,6 +12,9 @@ load(file.path('data', 'samediff.RData'))
 
 # Change Listener to subj 
 data$subj = factor(data$subj)
+
+# Relabel freq diffs to be in percent
+data$freq_diff = factor(data$freq_diff, levels=c('0.5', '1', '2', '3'), labels=c('0.5%', '1%', '2%', '3%'))
 
 # Plot
 data %>%
@@ -53,4 +57,4 @@ data %>%
        shape='Tone Order')
 
 # Save to disk
-ggsave(file.path('figs', 'fig3.png'), width=6, height=3)
+ggsave(file.path('figs', 'fig3.png'), width=font_scale*0.75, height=font_scale*0.3)

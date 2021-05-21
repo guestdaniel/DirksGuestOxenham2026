@@ -1,6 +1,7 @@
 # Libraries
 library(ggplot2)
 library(dplyr)
+source('config.R')
 
 # Save some variables to control details in plot
 font_scale = 8
@@ -27,7 +28,7 @@ data %>%
 		geom_point() +
 		geom_errorbar(width=0.15, linetype=1) + 
 		geom_smooth(method='lm', se=FALSE) +
-		facet_grid(practice ~ target_tone) + 
+		facet_grid(target_tone ~ practice) +
 		# Themes
 		theme_bw() +
 		theme(axis.text.y=element_text(size=1*font_scale),   # axis tick label font size
@@ -51,4 +52,4 @@ data %>%
 		     linetype='Order',
 		     shape='Order')
 # Save to disk
-ggsave(file.path('figs', 'fig2.png'), width=5, height=7)
+ggsave(file.path('figs', 'fig2.png'), width=font_scale*0.75, height=font_scale*0.5)
