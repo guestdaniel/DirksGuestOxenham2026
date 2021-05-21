@@ -9,7 +9,7 @@ load(file=file.path('outputs', 'comp_model_bootstraps.RData'))
 
 # Extract sum of squared errors (SSE) from both datasets across all bootstraps
 results = data.frame()
-for (sim in 1:n_sim) {
+for (sim in 1:dim(model_bootstraps)[2]) {
 	# Extract results for this simulation
 	res_sensory = model_bootstraps[1, sim][[1]][[3]]
 	res_criterion = model_bootstraps[2, sim][[1]][[3]]
@@ -34,7 +34,7 @@ comparison_SSE = results %>%
 	summarize(diff=sensory-criterion)
 
 # Visualize difference of SSE
-as.data.frame(comparison_SSE) %>% mutate(experiment=factor(experiment, labels=c("Same-Different", "Up-Down"))) %>%
+as.data.frame(comparison_SSE) %>% mutate(experiment=factor(experiment, levels=c('samediff', 'updown'), labels=c('Up-down', 'Same-different'))) %>%
 	ggplot(aes(x=diff)) + 
 	geom_histogram() + 
 	geom_vline(xintercept=0, linetype='dashed', color='red') + 
@@ -52,7 +52,7 @@ as.data.frame(comparison_SSE) %>% mutate(experiment=factor(experiment, labels=c(
 			panel.grid.minor = element_blank()) +
 	xlab('Difference in Sum of Squared Errors') +
 	ylab('Count') + 
-	xlim(c(0, 0.3))  +
+	#xlim(c(-0.5, 0.5))  +
 	scale_y_continuous(expand=c(0, 0))
 ggsave(file.path('figs', 'fig6a.png'), width=3, height=4, dpi=300)
 
@@ -92,7 +92,7 @@ results %>% filter(parameter == 'p1') %>%
 			panel.grid.minor = element_blank()) +
 		xlab('Frequency (Hz)') +
 		ylab('Count') +
-		xlim(c(800, 1100)) +
+		xlim(c(850, 1150)) +
 		scale_y_continuous(expand=c(0, 0))
 ggsave(file.path('figs', 'fig6b.png'), width=3, height=4, dpi=300)
 
@@ -113,6 +113,7 @@ results %>% filter(parameter == 'p3') %>%
 			panel.grid.minor = element_blank()) +
 		xlab('Alpha (%)') +
 		ylab('Count') +
+		xlim(c(0.65, 0.85)) +
 		scale_y_continuous(expand=c(0, 0))
 ggsave(file.path('figs', 'fig6c.png'), width=3, height=4, dpi=300)
 
@@ -133,5 +134,6 @@ results %>% filter(parameter == 'p4') %>%
 			panel.grid.minor = element_blank()) +
 		xlab('Lambda (proportion)') +
 		ylab('Count') +
+		xlim(c(0.1, 0.2)) +
 		scale_y_continuous(expand=c(0, 0))
 ggsave(file.path('figs', 'fig6d.png'), width=3, height=4, dpi=300)

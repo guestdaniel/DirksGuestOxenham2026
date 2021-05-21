@@ -4,7 +4,7 @@ library(pracma)
 library(ggplot2)
 
 # Set bootstrap parameters
-n_sim = 150
+n_sim = 100
 
 # Load data
 load(file.path('data', 'updown.RData'))
