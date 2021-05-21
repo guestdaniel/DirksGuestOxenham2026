@@ -47,10 +47,11 @@ as.data.frame(comparison_SSE) %>% mutate(experiment=factor(experiment, levels=c(
 			legend.text=element_text(size=1*font_scale),     # legend text font size
 			legend.title=element_text(size=1.2*font_scale),  # legend title font size
 			strip.text.x=element_text(size=1*font_scale),    # facet label font size
+		    strip.text.y=element_text(size=1*font_scale),    # facet label font size
 			plot.title=element_text(size=1.4*font_scale),      # figure title font size
 			panel.grid.major=element_blank(),
 			panel.grid.minor = element_blank()) +
-	xlab('Difference in Sum of Squared Errors') +
+	xlab('Difference in SSE') +
 	ylab('Count') + 
 	#xlim(c(-0.5, 0.5))  +
 	scale_y_continuous(expand=c(0, 0))
@@ -87,6 +88,7 @@ results %>% filter(parameter == 'p1') %>%
 			legend.text=element_text(size=1*font_scale),     # legend text font size
 			legend.title=element_text(size=1.2*font_scale),  # legend title font size
 			strip.text.x=element_text(size=1*font_scale),    # facet label font size
+			strip.text.y=element_text(size=1*font_scale),    # facet label font size
 			plot.title=element_text(size=1.4*font_scale),      # figure title font size
 			panel.grid.major=element_blank(),
 			panel.grid.minor = element_blank()) +
@@ -108,6 +110,7 @@ results %>% filter(parameter == 'p3') %>%
 			legend.text=element_text(size=1*font_scale),     # legend text font size
 			legend.title=element_text(size=1.2*font_scale),  # legend title font size
 			strip.text.x=element_text(size=1*font_scale),    # facet label font size
+			strip.text.y=element_text(size=1*font_scale),    # facet label font size
 			plot.title=element_text(size=1.4*font_scale),      # figure title font size
 			panel.grid.major=element_blank(),
 			panel.grid.minor = element_blank()) +
@@ -129,6 +132,7 @@ results %>% filter(parameter == 'p4') %>%
 			legend.text=element_text(size=1*font_scale),     # legend text font size
 			legend.title=element_text(size=1.2*font_scale),  # legend title font size
 			strip.text.x=element_text(size=1*font_scale),    # facet label font size
+			strip.text.y=element_text(size=1*font_scale),    # facet label font size
 			plot.title=element_text(size=1.4*font_scale),      # figure title font size
 			panel.grid.major=element_blank(),
 			panel.grid.minor = element_blank()) +
