@@ -1,24 +1,23 @@
+# NOTE: This script is *not* expected to be run by outside users because it requires access to
+# raw data on protected UMN servers... It is merely intended for inspection and end users should instead
+# use preprocessed data files (see README)
+
 # Libraries
 library(dplyr)
 library(ggplot2)
 library(lme4)
 
 # Configure directories
-if (Sys.info()['nodename'] == 'daniel-desktop'){
-	data_dir = '/home/daniel/apc_store/pitchbias/data'
-	git_dir = '/home/daniel/pitchbias/data'
-	server_dir = '/mnt/m/Experiments/Coral/PitchRoving'
-	setwd(server_dir)
-	directories = c('Unpracticed', 
-		'Unpracticed/Thursday\ Participants', 
-		'Practiced', 
-		'Practiced/Thursday\ Participants',
-		'Practiced/Thursday\ Extra',
-		'Practice2', 
-		'Practice3')
-} else {
-	# Coral can put her directories here
-}
+data_dir = 'data'
+server_dir = '/mnt/m/Experiments/Coral/PitchRoving'  # users outside APC Lab cannot access raw data here
+setwd(server_dir)
+directories = c('Unpracticed',
+                'Unpracticed/Thursday\ Participants',
+		        'Practiced',
+                'Practiced/Thursday\ Participants',
+                'Practiced/Thursday\ Extra',
+                'Practice2',
+                'Practice3')
 
 # Compile lists of files to load and folders to load from 
 data_files = list()
@@ -108,6 +107,8 @@ for (ii in 1:length(directories)) {
 # Filter out bad conditions
 df_2col = df_2col %>%
 	filter(center_freq != 888)
+df_2col = df_2col %>%
+  filter(center_freq != 880)
 
 # Patch issues in data
 # Remove 889 and 890 from unpracticed for all subjects (pracval = 1)
@@ -143,8 +144,6 @@ data$practice = factor(data$practice,
 		       labels=c("Unpracticed", "Practice Session 1", "Practice Session 2", "Practice Session 3"))
 
 # Save preprocessed data to disk
-dir.create(file.path(data_dir, Sys.Date()), recursive=TRUE)
-save('data', file=file.path(data_dir, Sys.Date(), 'clean_data.RData'))
-dir.create(file.path(git_dir, Sys.Date()), recursive=TRUE)
-save('data', file=file.path(git_dir, Sys.Date(), 'clean_data.RData'))
+setwd('/home/daniel/DirksGuestOxenham2021')
+save('data', file=file.path(data_dir, 'updown.RData'))
 

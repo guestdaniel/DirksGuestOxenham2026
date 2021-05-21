@@ -1,15 +1,15 @@
+# NOTE: This script is *not* expected to be run by outside users because it requires access to
+# raw data on protected UMN servers... It is merely intended for inspection and end users should instead
+# use preprocessed data files (see README)
+
 library(dplyr)
 library(ggplot2)
 rm(list = ls())
 
 # Configure directories
-if (Sys.info()['nodename'] == 'daniel-desktop'){
-	setwd('/mnt/m/Experiments/Coral/PitchRoving/Same\ or\ Different/Revised/Analysis')
-	data_dir = '~/apc_store/pitchbias/data'
-	git_dir = '~/pitchbias/data'
-} else {
-	# Coral can put her directories here
-}
+data_dir = 'data'
+server_dir = '/mnt/m/Experiments/Coral/PitchRoving/Same\ or\ Different/Revised/Analysis'  # users outside APC Lab cannot access raw data here
+setwd(server_dir)
 
 ### COMPILE DATA ###
 data_files = list()
@@ -71,8 +71,6 @@ max_num_trials = 840
 data = bind_rows(data, lapply(data_files, read_data, max_num_trials=max_num_trials))
 
 # Save preprocessed data to disk
-dir.create(file.path(data_dir, Sys.Date()), recursive=TRUE)
-save('data', file=file.path(data_dir, Sys.Date(), 'clean_same_diff_data.RData'))
-dir.create(file.path(git_dir, Sys.Date()), recursive=TRUE)
-save('data', file=file.path(git_dir, Sys.Date(), 'clean_same_diff_data.RData'))
+setwd('/home/daniel/DirksGuestOxenham2021')
+save('data', file=file.path(data_dir, 'samediff.RData'))
 
