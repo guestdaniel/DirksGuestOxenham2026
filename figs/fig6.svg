@@ -29,9 +29,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="550.55581"
-     inkscape:cy="269.41989"
+     inkscape:zoom="0.7"
+     inkscape:cx="470.78443"
+     inkscape:cy="-3.7118685"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -39,11 +39,11 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="2488"
-     inkscape:window-height="1376"
-     inkscape:window-x="1992"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1902"
+     inkscape:window-height="1043"
+     inkscape:window-x="9"
+     inkscape:window-y="584"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -52,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -85,16 +85,16 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944466px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="3.1172848"
-       y="17.280771"
+       y="18.868273"
        id="text845"><tspan
          sodipodi:role="line"
          id="tspan843"
          x="3.1172848"
-         y="17.280771"
+         y="18.868273"
          style="font-style:italic;stroke-width:0.26458332">Sensory bias - criterion shift</tspan></text>
     <g
        id="g885"
-       transform="translate(4.2333335,1.1896324)">
+       transform="translate(3.7041668,1.1896324)">
       <image
          sodipodi:absref="/home/daniel/DirksGuestOxenham2021/figs/fig6d.png"
          xlink:href="fig6d.png"
@@ -102,7 +102,7 @@
          height="101.6"
          preserveAspectRatio="none"
          id="image857"
-         x="246.00751"
+         x="244.42003"
          y="17.684553" />
       <image
          sodipodi:absref="/home/daniel/DirksGuestOxenham2021/figs/fig6c.png"
@@ -111,7 +111,7 @@
          height="101.6"
          preserveAspectRatio="none"
          id="image868"
-         x="175.76064"
+         x="174.70232"
          y="17.684553" />
       <image
          sodipodi:absref="/home/daniel/DirksGuestOxenham2021/figs/fig6b.png"
@@ -137,35 +137,35 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944466px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="123.71832"
-       y="17.280771"
+       x="124.77666"
+       y="18.868273"
        id="text845-7"><tspan
          sodipodi:role="line"
          id="tspan843-5"
-         x="123.71832"
-         y="17.280771"
+         x="124.77666"
+         y="18.868273"
          style="font-style:italic;stroke-width:0.26458332">Perceived mean</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944466px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="201.97523"
-       y="17.280771"
+       x="202.50439"
+       y="18.868273"
        id="text845-7-3"><tspan
          sodipodi:role="line"
          id="tspan843-5-5"
-         x="201.97523"
-         y="17.280771"
+         x="202.50439"
+         y="18.868273"
          style="font-style:italic;stroke-width:0.26458332">Sensitivity</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944466px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="272.65851"
-       y="17.280771"
+       x="271.60016"
+       y="18.868273"
        id="text845-7-6"><tspan
          sodipodi:role="line"
          id="tspan843-5-2"
-         x="272.65851"
-         y="17.280771"
-         style="font-style:italic;stroke-width:0.26458332">Attention</tspan></text>
+         x="271.60016"
+         y="18.868273"
+         style="font-style:italic;stroke-width:0.26458332">Inattention</tspan></text>
   </g>
 </svg>

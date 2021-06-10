@@ -36,7 +36,7 @@ comparison_SSE = results %>%
 # Visualize difference of SSE
 as.data.frame(comparison_SSE) %>% mutate(experiment=factor(experiment, levels=c('samediff', 'updown'), labels=c('Up-down', 'Same-different'))) %>%
 	ggplot(aes(x=diff)) + 
-	geom_histogram() + 
+	geom_histogram(bins=100) +
 	geom_vline(xintercept=0, linetype='dashed', color='red') + 
 	facet_grid(experiment ~ .) +
 	theme_bw() +
@@ -58,7 +58,7 @@ as.data.frame(comparison_SSE) %>% mutate(experiment=factor(experiment, levels=c(
 ggsave(file.path('figs', 'fig6a.png'), width=3, height=4, dpi=300)
 
 # Extract all parameter estimates
-results = data.frame()
+results = data.frame()`
 pnames = c("p1", "p2", "p3", "p4", "p5")
 for (sim in 1:dim(model_bootstraps)[2]) {
 	# Extract results for this simulation
@@ -77,7 +77,7 @@ results$model = factor(results$model, levels=c('sensory', 'criterion'), labels=c
 # Visualize parameters 1, 3, and 4 side-by-side
 results %>% filter(parameter == 'p1') %>%
 	ggplot(aes(x=10^value)) +
-		geom_histogram() +
+		geom_histogram(bins=100) +
 		geom_vline(xintercept=1000, linetype='dashed', color='red') +
 		facet_grid(model ~ .) +
 		theme_bw() +
@@ -100,7 +100,7 @@ ggsave(file.path('figs', 'fig6b.png'), width=3, height=4, dpi=300)
 
 results %>% filter(parameter == 'p3') %>%
 	ggplot(aes(x=100*(10^(10^(value)) - 1))) +
-		geom_histogram() +
+		geom_histogram(bins=100) +
 		facet_grid(model ~ .) +
 		theme_bw() +
 		  theme(axis.text.y=element_text(size=1*font_scale),   # axis tick label font size
@@ -122,7 +122,7 @@ ggsave(file.path('figs', 'fig6c.png'), width=3, height=4, dpi=300)
 
 results %>% filter(parameter == 'p4') %>%
 	ggplot(aes(x=value)) +
-		geom_histogram() +
+		geom_histogram(bins=100) +
 		facet_grid(model ~ .) +
 		theme_bw() +
 		  theme(axis.text.y=element_text(size=1*font_scale),   # axis tick label font size

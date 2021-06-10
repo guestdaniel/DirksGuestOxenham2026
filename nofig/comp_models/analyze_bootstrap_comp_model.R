@@ -3,6 +3,7 @@ library(tidyr)
 
 # Load in model bootstraps
 load(file=file.path('outputs', 'comp_model_bootstraps.RData'))
+n_sim = 1000
 
 # Extract updown and samediff SSE
 results = data.frame()
