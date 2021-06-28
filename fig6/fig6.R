@@ -58,7 +58,7 @@ as.data.frame(comparison_SSE) %>% mutate(experiment=factor(experiment, levels=c(
 ggsave(file.path('figs', 'fig6a.png'), width=3, height=4, dpi=300)
 
 # Extract all parameter estimates
-results = data.frame()`
+results = data.frame()
 pnames = c("p1", "p2", "p3", "p4", "p5")
 for (sim in 1:dim(model_bootstraps)[2]) {
 	# Extract results for this simulation

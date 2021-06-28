@@ -1,4 +1,5 @@
-# Reproduces every figure in Dirks, Guest, and Oxenham (2021), including reproducing underlying simulations
+# Reproduces every figure in Dirks, Guest, and Oxenham (2021) and reproduces underlying computational models and
+# statistical analyses.
 
 # Get the behavioral data before we start running scripts
 #wget LINKHERE -O data/data_archive.zip
