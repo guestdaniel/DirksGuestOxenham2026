@@ -33,7 +33,7 @@ The file structure of this repository is shown in the file hierarchy below. Code
 
 Preprocessed behavioral data are available separately at [Zenodo](link). The `.R` scripts used to generate these data from the raw behavioral data are available in `nofig`. We recommend downloading the behavioral data from Zenodo and unzipping the files into the empty `data` folder in this repository to run the code. 
 
-The MATLAB code used to collect behavioral responses is available compressed into a single `.zip` file. This code depends on MATLAB and on the [`afc`](http://medi.uni-oldenburg.de/afc/) package and is not thoroughly documented. 
+The MATLAB code used to collect behavioral responses is available upon request. 
 
 ## Instructions (Docker)
 
