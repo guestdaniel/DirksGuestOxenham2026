@@ -1,16 +1,23 @@
-# NOTE: This script is *not* expected to be run by outside users because it requires access to
-# raw data on protected UMN servers... It is merely intended for inspection and end users should instead
-# use preprocessed data files (see README)
+# preprocess_data_updown_new.R
+#
+# This script preprocesses raw .dat files from the experimental protocol and transforms them into
+# a format suitable for public consumption. Crucially, this step includes de-identifying participant
+# labels so that the public dataset is fully anonymous. This is done in the script in a way that the
+# script itself contains no identifying information, so it can still be made publicly available
+# even if the data it operates on cannot be.
+# 
+# This script is specific to the "updown" data from the up-down experiment described in the paper.
+# A separate script preprocessed the same-different dataset.
 
-# Libraries
+# Load libraries
 library(dplyr)
 library(ggplot2)
-library(lme4)
 
-# Configure directories
-data_dir = 'data'
-server_dir = '/mnt/m/Experiments/Coral/PitchRoving'  # users outside APC Lab cannot access raw data here
-setwd(server_dir)
+# Define the directions where raw data will be found and where preprocessed data will be saved
+raw_dir = 'data/PitchRoving'  # where the raw data lives (typical users would not have this on their path)
+processed_dir = 'data'        # where the final data lives
+
+# Make a vector of the names of folders within 
 directories = c('Unpracticed',
                 'Unpracticed/Thursday\ Participants',
 		        'Practiced',
@@ -22,12 +29,17 @@ directories = c('Unpracticed',
 # Compile lists of files to load and folders to load from 
 data_files = list()
 for (ii in 1:length(directories)) {
-	temp <- list.files(directories[[ii]], pattern = '.dat')
+    # Get a list of all the .dat files in this directory
+	temp <- list.files(file.path(raw_dir, directories[[ii]]), pattern = '.dat')
+
+    # Filter out controls, $s, Xs, and the loaddata function
 	temp <- temp[!grepl("control", temp)]
 	temp <- temp[!grepl("$", temp, fixed=TRUE)]
 	temp <- temp[!grepl("X", temp, fixed=TRUE)]
 	temp <- temp[!grepl("Loaddata_v1.m", temp)]
-	data_files[[ii]] = temp
+
+    # Store the path (relative to root dir) of each data file
+	data_files[[ii]] = file.path(raw_dir, directories[[ii]], temp)
 }
 
 # Create a function to read in each data file
@@ -85,7 +97,7 @@ read_data <- function(filename, max_num_trials, pracval, flag){
   return(temp)
   }
 
-# Create vectors to control data import
+# Create vectors needed to provide supplemental information for data import
 df_2col = data.frame()
 max_num_trials = c(60, 60, 300, 300, 96, 480, 480)
 pracvals = c(1, 1, 2, 2, 2.5, 3, 4) #1 = unpracticed, 
@@ -94,14 +106,11 @@ pracvals = c(1, 1, 2, 2, 2.5, 3, 4) #1 = unpracticed,
                                   #3 = practice 2, 
                                   #4 = practice 3
 flags = c(NA, 'Thursday', NA, 'Thursday', 'Thursday', NA, NA)
-# Loop through data directories and import data
+
+# Loop through data directories and use lapply to apply import function to each data file
 for (ii in 1:length(directories)) {
-	# Set directory
-	setwd(directories[ii])
 	# Pull data
 	df_2col = bind_rows(df_2col, lapply(data_files[[ii]], read_data, max_num_trials=max_num_trials[ii], pracval=pracvals[ii], flag=flags[ii]))
-	# Return directory
-	setwd(server_dir)
 }
 
 # Filter out bad conditions
@@ -117,8 +126,12 @@ df_2col = df_2col %>%
 df_2col = df_2col %>%
        filter(!(center_freq == 890 & pracval == 1)) 	
 
+# Create anonymous labels for subjects instead of true labels
+df_2col$Listener = as.factor(df_2col$Listener)
+levels(df_2col$Listener) = 1:length(levels(df_2col$Listener))
+
 # Change 889 in Thursday Extras to pracval = 2 (these conditions I ran in)
-df_2col[grepl("AAM|KJR|LKJ|SAC", df_2col$Listener) & 
+df_2col[df_2col$Listener %in% c(2, 14, 15, 19) & 
 	df_2col$center_freq == 889 &
 	df_2col$pracval == 2.5, "pracval"] = 2
 
@@ -143,7 +156,8 @@ data$target_tone = factor(data$target_tone,
 data$practice = factor(data$practice,
 		       labels=c("Unpracticed", "Practice Session 1", "Practice Session 2", "Practice Session 3"))
 
+
 # Save preprocessed data to disk
-setwd('/home/daniel/DirksGuestOxenham2021')
-save('data', file=file.path(data_dir, 'updown.RData'))
+save('data', file=file.path(processed_dir, 'updown.RData'))
+
 
