@@ -16,7 +16,7 @@ The file structure of this repository is shown in the file hierarchy below. Code
 ├── figs/                    # .png files of manuscript figures
 ├── nofig                    # Code that is needed but is not directly featured in a single manuscript figure
 │   ├── comp_models          # Fit computational models to the behavioral data
-│   ├── data                 # Preprocess the behavioral data
+│   ├── preprocess           # Preprocess the behavioral data
 │   └── stats                # Analyze the behavioral data
 ├── outputs/                 # Saved copies of fitted model objects, statistical tests, etc.
 ├── scripts/                 # Scripts or function definitions called by other files
@@ -57,6 +57,3 @@ Behavioral data analyses can be reproduced by running the `.R` scripts in `nofig
 - Figure 4: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig4/fig4.R`, the plot is saved in `figs/fig4.png`. 
 - Figure 5: Run `nofig/comp_models/fit_comp_models.R`. This will fit the criterion shift and sensory models to the behavioral data and then save the fitted models in `outputs`. Then run `fig5/fig5.R`, the plot is saved in `figs/fig5.png`. 
 - Figure 6: Run `nofig/comp_models/bootstrap_comp_models.R`, then run `fig6/fig6.R`. The subplots are saved in `figs/fig6a.png`, `figs/fig6b.png`, and so on. These subplots are combined in Inkscape to yield `figs/fig6.png`. 
-
-### Shell script
-`run.sh` in the top-level directory of the repository provides a shell script that should (probably) run on most POSIX-compliant shells. When run from this directory, the script will download and unpack the behavioral data from Zenodo, run all necessary behavioral and computational analyses, and generate all figures in the manuscript. 

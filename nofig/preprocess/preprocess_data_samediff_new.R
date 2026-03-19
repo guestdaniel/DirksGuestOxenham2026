@@ -1,4 +1,3 @@
-# preprocess_data_samediff_new.R
 #
 # This script preprocesses raw .dat files from the experimental protocol and transforms them into
 # a format suitable for public consumption. Crucially, this step includes de-identifying participant
@@ -83,5 +82,6 @@ levels(data$subj) = 1:length(levels(data$subj))
 
 # Save preprocessed data to disk
 save('data', file=file.path(processed_dir, 'samediff.RData'))
+write.csv(data, file=file.path(processed_dir, 'samediff.csv'), row.names=FALSE)
 
 

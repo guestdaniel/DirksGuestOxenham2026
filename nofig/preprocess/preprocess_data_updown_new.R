@@ -159,5 +159,6 @@ data$practice = factor(data$practice,
 
 # Save preprocessed data to disk
 save('data', file=file.path(processed_dir, 'updown.RData'))
+write.csv(data, file=file.path(processed_dir, 'updown.csv'), row.names=FALSE)
 
 

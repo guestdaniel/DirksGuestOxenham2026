@@ -1,7 +1,13 @@
-# Reproduces every figure in Dirks, Guest, and Oxenham (2021) and reproduces underlying computational models and
-# statistical analyses.
+# Shell script to reproduce figures and analyses in Dirks, Guest, and Oxenham (2026) 
+# On Mac/Linux, you should be able to run this entire script in the shell. On Windows, you may have
+# to run it line-by-line and adjust commands as needed.
 
-# Get the behavioral data before we start running scripts
+# Run preprocessing commands to generate preprocessed behavioral data from raw behavioral data
+# NOTE: Only the experimenters need to run this!
+Rscript nofig/preprocess/preprocess_data_samediff_new.R
+Rscript nofig/preprocess/preprocess_data_updown_new.R
+
+# Get the preprocessed behavioral data from Zenodo 
 #wget LINKHERE -O data/data_archive.zip
 unzip data/data_archive.zip
 cp data_archive/* data
