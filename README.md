@@ -27,7 +27,7 @@ The file structure of this repository is shown in the file hierarchy below. Code
 ```
 
 ## Behavioral data
-Preprocessed behavioral data are available separately at [Zenodo](link). The `.R` scripts used to generate these data from the raw behavioral data are available in `nofig`. We recommend downloading the behavioral data from Zenodo and unzipping the files into the empty `data` folder in this repository to run the code. 
+Preprocessed behavioral data are available separately at [Zenodo](https://doi.org/10.5281/zenodo.19738875). The `.R` scripts used to generate these data from the raw behavioral data are available in `nofig`. We recommend downloading the behavioral data from Zenodo and unzipping the files into an empty `data` folder in the root directory of this repository to run the code. 
 
 The MATLAB code used to collect behavioral responses is available upon request. 
 

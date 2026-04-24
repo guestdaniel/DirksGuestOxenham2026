@@ -14,8 +14,8 @@ load(file.path('data', 'samediff.RData'))
 data_samediff = data
 
 # Save results to disk
-load(file.path('outputs', 'fitted_comp_sensory_bias_model.RData'))
-load(file.path('outputs', 'fitted_comp_criterion_shift_model.RData'))
+load(file.path('outputs', 'fitted_comp_sensory_bias_model_clean.RData'))
+load(file.path('outputs', 'fitted_comp_criterion_shift_model_clean.RData'))
 
 # Extract data frames w/ fit from model objects
 data_sensory_bias = model_sensory_bias[[2]]
@@ -43,11 +43,17 @@ temp = temp %>%
 	group_by(src, supername, center_freq, freq_diff, trial_type) %>%
 	summarize(p_corr_error=sd(p_corr)/sqrt(n()), p_corr=mean(p_corr)) %>%
 	mutate(freq_diff=factor(freq_diff, levels=c('0.5', '1', '2', '3'), labels=c('0.5%', '1%', '2%', '3%')))
+
+# Create  copy of temp to remove behavior category
+temp_model = temp[temp$supername == "Model", ]
+temp_model$src = factor(temp_model$src)
+temp_model$model = temp_model$src
+
 temp %>%
-	ggplot(aes(x=center_freq, y=p_corr, color=trial_type, ymin=p_corr-p_corr_error, ymax=p_corr+p_corr_error, linetype=src, shape=trial_type, group=interaction(trial_type, src))) +
+	ggplot(aes(x=center_freq, y=p_corr, color=trial_type, ymin=p_corr-p_corr_error, ymax=p_corr+p_corr_error, shape=trial_type)) +
 		geom_point(data=temp[temp$src == "Behavior", ]) +
 		geom_errorbar(data=temp[temp$src == "Behavior", ], width=0.15, linetype=1) +
-		geom_line(data=temp[temp$supername == "Model", ]) +
+		geom_line(aes(linetype=model), data=temp_model, linewidth=1.1) +
 		facet_grid(. ~ freq_diff) +
 		# Themes
 		theme_bw() +
@@ -60,17 +66,21 @@ temp %>%
 		  strip.text.x=element_text(size=1*font_scale),    # facet label font size
 		  plot.title=element_text(size=1.4*font_scale),      # figure title font size
 		  legend.key.height=unit(0.4, 'cm'),
+          legend.position="bottom",
+          legend.box="horizontal",
+          legend.direction="vertical",
+          legend.spacing.x=unit(0.5, 'cm'),
 		  legend.key.size=unit(3, 'lines'),
 		  panel.grid.major=element_blank(),
 		  panel.grid.minor = element_blank()) +
 	        # Labels
 		scale_x_continuous(breaks=c(800, 900, 1000, 1100, 1200), labels=c("800", "", "1000", "", "1200")) +
-		scale_linetype_manual(values=c("solid", "solid", "dashed")) +
 		scale_color_manual(values=three_part_colors) +
 		ylim(c(0.2, 1)) +
 		labs(x="Center Frequency (Hz)",
 		     y="Proportion Correct",
 		     color="Tone Order",
 		     linetype="Source",
-		     shape="Tone Order")
-ggsave(file.path('figs', 'fig5.png'), width=font_scale*0.75, height=font_scale*0.3)
+		     shape="Tone Order") + 
+        guides(color=guide_legend(override.aes = list(linetype = 0)))
+ggsave(file.path('figs', 'fig5.png'), width=font_scale*0.75, height=font_scale*0.5)

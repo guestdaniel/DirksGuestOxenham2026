@@ -45,6 +45,10 @@ data %>%
         plot.title=element_text(size=1.4*font_scale),      # figure title font size
         legend.key.height=unit(0.4, 'cm'),
         legend.key.size=unit(3, 'lines'),
+          legend.position="bottom",
+          legend.box="horizontal",
+          legend.direction="vertical",
+          legend.spacing.x=unit(0.5, 'cm'),
         panel.grid.major=element_blank(), 
         panel.grid.minor = element_blank()) +
   # Labels
@@ -57,4 +61,4 @@ data %>%
        shape='Tone Order')
 
 # Save to disk
-ggsave(file.path('figs', 'fig3.png'), width=font_scale*0.75, height=font_scale*0.3)
+ggsave(file.path('figs', 'fig3.png'), width=font_scale*0.8, height=font_scale*0.3)

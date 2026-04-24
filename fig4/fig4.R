@@ -45,10 +45,16 @@ temp = temp %>%
 	summarize(p_corr_error=sd(p_corr)/sqrt(n()), p_corr=mean(p_corr)) %>%
 	mutate(freq_diff=factor(freq_diff, levels=c('0', '0.5', '0.75', '1', '1.5', '2', '5'),
 	                        labels=c('0%', '0.5%', '0.75%', '1%', '1.5%', '2%', '5%')))
-temp %>% ggplot(aes(x=center_freq, y=p_corr, color=sign, ymin=p_corr-p_corr_error, ymax=p_corr+p_corr_error, linetype=src)) + 
+
+# Create  copy of temp to remove behavior category
+temp_model = temp[temp$supername == "Model", ]
+temp_model$src = factor(temp_model$src)
+temp_model$model = temp_model$src
+
+temp %>% ggplot(aes(x=center_freq, y=p_corr, color=sign, ymin=p_corr-p_corr_error, ymax=p_corr+p_corr_error)) + 
 		geom_point(data=temp[temp$src == "Behavior", ]) +
 		geom_errorbar(width=0.15, linetype=1) + 
-		geom_line(data=temp[temp$supername == "Model", ]) + 
+		geom_line(aes(linetype=model), data=temp_model) + 
 		facet_grid(. ~ freq_diff) + 
 		# Themes
 		theme_bw() +
@@ -62,14 +68,32 @@ temp %>% ggplot(aes(x=center_freq, y=p_corr, color=sign, ymin=p_corr-p_corr_erro
 		  plot.title=element_text(size=1.4*font_scale),      # figure title font size
 		  legend.key.height=unit(0.4, 'cm'),
 		  legend.key.size=unit(3, 'lines'),
+          legend.position="bottom",
+          legend.box="horizontal",
+          legend.direction="vertical",
+          legend.spacing.x=unit(0.5, 'cm'),
 		  panel.grid.major=element_blank(), 
 		  panel.grid.minor = element_blank()) +
 	        # Labels
 		scale_x_continuous(breaks=c(800, 900, 1000, 1100, 1200), labels=c("800", "", "1000", "", "1200")) + 
-		scale_linetype_manual(values=c("solid", "solid", "dashed")) + 
 		ylim(c(0.2, 1)) + 
 		labs(x="Center Frequency (Hz)", 
 		     y="Proportion Correct", 
 		     color="Tone Order", 
-		     linetype="Source")
-ggsave(file.path('figs', 'fig4.png'), width=font_scale*0.75, height=font_scale*0.3)
+		     linetype="Model") +
+        guides(color=guide_legend(override.aes = list(linetype = 0)))
+ggsave(file.path('figs', 'fig4.png'), width=font_scale*0.8, height=font_scale*0.4)
+
+# # Supporting analysis (# subjects in each panel)
+# temp = data_sensory_bias[data_sensory_bias$exp == "updown", ]
+# temp = temp %>% pivot_longer(cols=c("y", "y_hat", "y_hat_shift"))
+# temp[temp$name == "y", "src"] = "Behavior"
+# temp[temp$name == "y_hat", "src"] = "Sensory Bias"
+# temp[temp$name == "y_hat_shift", "src"] = "Criterion Shift"
+# temp[temp$src == "Behavior", "supername"] = "Behavior"
+# temp[temp$src != "Behavior", "supername"] = "Model"
+# temp[mod(temp$center_freq, 2) != 0, "center_freq"] = temp[mod(temp$center_freq, 2) != 0, "center_freq"] + 1
+
+# temp %>%
+# 	group_by(src, supername, freq_diff) %>%
+# 	summarize(N=length(unique(subj)))
