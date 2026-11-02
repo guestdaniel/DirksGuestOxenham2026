@@ -41,14 +41,14 @@ data$tone_freq_int2 = log10(data$tone_freq_int2)
 # 	(5) discrimination threshold for the wrong question (whether tone pair above or below the mean), log10(f'/f) ? 
 
 if (version == 4) { # Everything is free
-	lower = c(1, 0, -3, 0.0, -3)
-	upper = c(5, 1, 1, 0.3, 6)
+	lower = c(log10(800), 0, -3, 0.0, -3)
+	upper = c(log10(1200), 1, 1, 0.3, 6)
 } else if (version == 3) { # Perceived mean is fixed at 3 = log(1000)
 	lower = c(3, 0, -3, 0.0, -3)
 	upper = c(3, 1, 1, 0.3, 6)
 } else if (version == 2) { # Inattention is chance
-	lower = c(1, 0.005, -3, 0.0, 0)
-	upper = c(5, 1, 1, 0.3, 0)
+	lower = c(log10(800), 0.005, -3, 0.0, 0)
+	upper = c(log10(1200), 1, 1, 0.3, 0)
 } else if (version == 1) { # Perceived mean is fixed at 3 = log(1000), inattention is chance
 	lower = c(3, 0, -3, 0.0, 0)
 	upper = c(3, 1, 1, 0.3, 0)

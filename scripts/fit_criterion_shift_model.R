@@ -44,14 +44,14 @@ data$tone_freq_int2 = log10(data$tone_freq_int2)
 
 # free parameters
 if (version == 5) { # Everything is free
-  lower = c(1, -2, -3, 0.0, -3)
-  upper = c(5, 2, 1, 0.3, 6)
+  lower = c(log10(800), -2, -3, 0.0, -3)
+  upper = c(log10(1200), 2, 1, 0.3, 6)
 } else if (version == 4) { # Fix perceived mean, let criterion shift happen, answering wrong question
   lower = c(3, -2, -3, 0.0, -3)
   upper = c(3, 2, 1, 0.3, 6)
 } else if (version == 3) { # Allow mean and k to vary, fix performance at chance during inattention
-  lower = c(2, -0.1, -3, 0.0, 0)
-  upper = c(4, 0.1, 1, 0.3, 0)
+  lower = c(log10(800), -0.1, -3, 0.0, 0)
+  upper = c(log10(1200), 0.1, 1, 0.3, 0)
 } else if (version == 2) { # Fix perceived mean, fix performance at chance during inattention, let k vary
   lower = c(3, -2, -3, 0.0, 0)
   upper = c(3, 2, 1, 0.3, 0)
