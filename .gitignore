@@ -43,3 +43,6 @@ vignettes/*.pdf
 data
 
 *.Rdata
+*.docx
+.DS_store
+*.png

@@ -89,7 +89,7 @@ model_anova[, 'Pr(>Chisq)'] = p.adjust(model_anova[, 'Pr(>Chisq)'], method='holm
 vals = p.adjust(c(test_1[, 'Pr(>Chisq)'], test_2a[, 'Pr(>Chisq)'], test_2b[, 'Pr(>Chisq)']), method='holm')
 test_1[, 'Pr(>Chisq)'] = vals[1:12]
 test_2a[, 'Pr(>Chisq)'] = vals[13:15]
-test_2b[, 'Pr(>Chisq'] = vals[16:18]
+test_2b[, 'Pr(>Chisq)'] = vals[16:18]
 
 # Report analyses
 sink(file.path('outputs', 'statsmodel_samediff_results.txt'))

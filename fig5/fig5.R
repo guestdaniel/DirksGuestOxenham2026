@@ -14,8 +14,8 @@ load(file.path('data', 'samediff.RData'))
 data_samediff = data
 
 # Save results to disk
-load(file.path('outputs', 'fitted_comp_sensory_bias_model_clean.RData'))
-load(file.path('outputs', 'fitted_comp_criterion_shift_model_clean.RData'))
+load(file.path('outputs', 'fitted_comp_sensory_bias_model.RData'))
+load(file.path('outputs', 'fitted_comp_criterion_shift_model.RData'))
 
 # Extract data frames w/ fit from model objects
 data_sensory_bias = model_sensory_bias[[2]]
@@ -54,7 +54,7 @@ temp %>%
 		geom_point(data=temp[temp$src == "Behavior", ]) +
 		geom_errorbar(data=temp[temp$src == "Behavior", ], width=0.15, linetype=1) +
 		geom_line(aes(linetype=model), data=temp_model, linewidth=1.1) +
-		facet_grid(. ~ freq_diff) +
+		facet_grid(trial_type ~ freq_diff) +
 		# Themes
 		theme_bw() +
 		theme(axis.text.x=element_text(size=1*font_scale, angle=45, hjust=1),   # axis tick label font size
@@ -83,4 +83,4 @@ temp %>%
 		     linetype="Source",
 		     shape="Tone Order") + 
         guides(color=guide_legend(override.aes = list(linetype = 0)))
-ggsave(file.path('figs', 'fig5.png'), width=font_scale*0.75, height=font_scale*0.5)
+ggsave(file.path('figs', 'fig5.png'), width=font_scale*0.75, height=font_scale*1.0)
