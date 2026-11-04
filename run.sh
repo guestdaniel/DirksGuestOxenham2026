@@ -26,6 +26,7 @@ Rscript fig3/fig3.R
 # Figure 4
 Rscript nofig/comp_models/fit_comp_models.R
 Rscript fig4/fig4.R
+Rscript nofig/comp_models/analyze_bootstrap_comp_model.R
 
 # Figure 5
 # Rscript nofig/comp_models/fit_comp_models.R  # We skip this step as we assume this was already done above in Fig 4

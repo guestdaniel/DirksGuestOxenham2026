@@ -1,0 +1,39 @@
+Linear mixed model fit by REML ['lmerMod']
+Formula: alpha ~ practice * TargetTone + (1 | subj)
+   Data: newdf
+REML criterion at convergence: 5.6314
+Random effects:
+ Groups   Name        Std.Dev.
+ subj     (Intercept) 0.3196  
+ Residual             0.1748  
+Number of obs: 146, groups:  subj, 20
+Fixed Effects:
+          (Intercept)              practice1              practice2  
+            -2.328734               0.066460               0.002274  
+            practice3            TargetTone1  practice1:TargetTone1  
+             0.004811              -0.028897              -0.034092  
+practice2:TargetTone1  practice3:TargetTone1  
+             0.017365               0.015453  
+[1] ""
+Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+
+Response: alpha
+                         F Df Df.res  Pr(>F)  
+practice            3.3490  3 119.37 0.06429 .
+TargetTone          4.0765  1 119.00 0.09146 .
+practice:TargetTone 0.7378  3 119.00 0.53149  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] ""
+F Test: 
+P-value adjustment method: holm
+                                        Value       SE     Df      F  Pr(>F)  
+       Unpracticed-Practice Session 1 1.15927 0.039094   1.00 2.6956 0.40719  
+       Unpracticed-Practice Session 2 1.15252 0.039840   1.00 2.3939 0.40719  
+       Unpracticed-Practice Session 3 1.38040 0.044337   1.00 9.9644 0.01212 *
+Practice Session 1-Practice Session 2 0.99417 0.039840   1.00 0.0041 0.94933  
+Practice Session 1-Practice Session 3 1.19075 0.044337   1.00 2.9223 0.40719  
+Practice Session 2-Practice Session 3 1.19772 0.044578   1.00 3.0879 0.40719  
+Residuals                                              119.54                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

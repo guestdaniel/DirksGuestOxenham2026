@@ -8,8 +8,12 @@ library(nlme)
 library(phia)
 options(contrasts=c("contr.sum","contr.poly"))
 
+# Source fitting function
+source(file.path('scripts', 'fit_jnd.R'))
+
 # Load data
 load(file.path('data', 'updown.RData'))
+data_updown = data
 
 # Make a new data frame with columns of subject, test session, target tone, and estimated JND
 newdf = data %>%
@@ -31,7 +35,9 @@ newdf = newdf %>% filter(alpha < 0) # excluded two outliers
 
 # Fit LME to alpha values and test hypothesis of changes across practice conditions
 lm_mod = lmer(alpha ~ practice*TargetTone + (1|subj), data=newdf)
-lm_mod_anova = Anova(lm_mod, type=2, test="F") 
+lm_mod_anova = Anova(lm_mod, type=2, test="F")
+# Correct ANOVA p-values
+lm_mod_anova[, "Pr(>F)"] = p.adjust(lm_mod_anova[, "Pr(>F)"], method="holm")
 
 # Estimate contrast tests between conditions with Holm-Bonferroni correction
 tests_h1 = testInteractions(lm_mod, pairwise="practice", adjustment="holm", test="F")

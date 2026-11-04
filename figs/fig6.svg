@@ -2,24 +2,24 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="323.26624mm"
-   height="119.59906mm"
-   viewBox="0 0 323.26624 119.59906"
+   width="327.2933mm"
+   height="119.82286mm"
+   viewBox="0 0 327.29331 119.82286"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
    sodipodi:docname="fig6.svg"
-   inkscape:export-filename="/home/daniel/DirksGuestOxenham2021/figs/fig6.png"
+   inkscape:export-filename="fig6.png"
    inkscape:export-xdpi="299.99173"
-   inkscape:export-ydpi="299.99173">
+   inkscape:export-ydpi="299.99173"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -30,8 +30,8 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="470.78443"
-     inkscape:cy="-3.7118685"
+     inkscape:cx="436.42857"
+     inkscape:cy="352.14286"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -39,11 +39,15 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1902"
-     inkscape:window-height="1043"
-     inkscape:window-x="9"
-     inkscape:window-y="584"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1728"
+     inkscape:window-height="966"
+     inkscape:window-x="1780"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:export-bgcolor="#ffffffff" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -52,7 +56,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -60,9 +63,8 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-3.1746112,-0.87512068)">
+     transform="translate(2.9691251,-0.65132524)">
     <image
-       sodipodi:absref="/home/daniel/DirksGuestOxenham2021/figs/fig6a.png"
        xlink:href="fig6a.png"
        y="18.874186"
        x="9.9964504"
@@ -72,18 +74,18 @@
        width="76.199997" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="23.16338"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:0.85;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-3.9509742"
        y="8.7438288"
        id="text839"><tspan
          sodipodi:role="line"
-         x="23.16338"
+         x="-3.9509742"
          y="8.7438288"
-         style="font-style:normal;font-weight:bold;stroke-width:0.26458332"
-         id="tspan841">Performance</tspan></text>
+         style="font-style:normal;font-weight:bold;stroke-width:0.264583"
+         id="tspan841">Model performance</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944466px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:0.85;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="3.1172848"
        y="18.868273"
        id="text845"><tspan
@@ -91,12 +93,11 @@
          id="tspan843"
          x="3.1172848"
          y="18.868273"
-         style="font-style:italic;stroke-width:0.26458332">Sensory bias - criterion shift</tspan></text>
+         style="font-style:italic;font-size:7.05556px;stroke-width:0.264583">Sensory bias - criterion shift</tspan></text>
     <g
        id="g885"
        transform="translate(3.7041668,1.1896324)">
       <image
-         sodipodi:absref="/home/daniel/DirksGuestOxenham2021/figs/fig6d.png"
          xlink:href="fig6d.png"
          width="76.199997"
          height="101.6"
@@ -105,7 +106,6 @@
          x="244.42003"
          y="17.684553" />
       <image
-         sodipodi:absref="/home/daniel/DirksGuestOxenham2021/figs/fig6c.png"
          xlink:href="fig6c.png"
          width="76.199997"
          height="101.6"
@@ -114,7 +114,6 @@
          x="174.70232"
          y="17.684553" />
       <image
-         sodipodi:absref="/home/daniel/DirksGuestOxenham2021/figs/fig6b.png"
          xlink:href="fig6b.png"
          width="76.199997"
          height="101.6"
@@ -125,47 +124,47 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="169.4081"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:0.85;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="158.03734"
        y="8.7438288"
        id="text839-3"><tspan
          sodipodi:role="line"
-         x="169.4081"
+         x="158.03734"
          y="8.7438288"
-         style="font-style:normal;font-weight:bold;stroke-width:0.26458332"
+         style="font-style:normal;font-weight:bold;stroke-width:0.264583"
          id="tspan841-6">Parameter estimates</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944466px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="124.77666"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:0.85;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="127.42248"
        y="18.868273"
        id="text845-7"><tspan
          sodipodi:role="line"
          id="tspan843-5"
-         x="124.77666"
+         x="127.42248"
          y="18.868273"
-         style="font-style:italic;stroke-width:0.26458332">Perceived mean</tspan></text>
+         style="font-style:italic;font-size:7.05556px;stroke-width:0.264583">Perceived mean</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944466px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="202.50439"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:0.85;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="203.56271"
        y="18.868273"
        id="text845-7-3"><tspan
          sodipodi:role="line"
          id="tspan843-5-5"
-         x="202.50439"
+         x="203.56271"
          y="18.868273"
-         style="font-style:italic;stroke-width:0.26458332">Sensitivity</tspan></text>
+         style="font-style:italic;font-size:7.05556px;stroke-width:0.264583">Sensitivity</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944466px;line-height:0.85000002;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="271.60016"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:0.85;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="273.18768"
        y="18.868273"
        id="text845-7-6"><tspan
          sodipodi:role="line"
          id="tspan843-5-2"
-         x="271.60016"
+         x="273.18768"
          y="18.868273"
-         style="font-style:italic;stroke-width:0.26458332">Inattention</tspan></text>
+         style="font-style:italic;font-size:7.05556px;stroke-width:0.264583">Inattention</tspan></text>
   </g>
 </svg>
