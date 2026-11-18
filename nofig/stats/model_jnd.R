@@ -43,7 +43,7 @@ lm_mod_anova = Anova(lm_mod, type=2, test="F")
 lm_mod_anova[, "Pr(>F)"] = p.adjust(lm_mod_anova[, "Pr(>F)"], method="holm")
 
 # Estimate contrast tests between conditions with Holm-Bonferroni correction
-# tests_h1 = testInteractions(lm_mod, pairwise="practice", adjustment="holm", test="F")
+# tests_h1 = testInteractions(lm_mod, pairwise_continuous="practice", adjustment="holm", test="F")
 # Transform value of tests into ratio bnetween conditions (by default, we have alpha_2 - alpha_1, since alpha_2 and
 # alpha_1 are in log units, we have log(JND_2) - log(JND_1) = log(JND_2/JND_1)... exponentiate to get ratio of JNDs)
 # tests_h1$Value = 10^(tests_h1$Value) # transform Value into ratio instead of log10(ratio) == log10(alpha_2) - log10(alpha_1)
