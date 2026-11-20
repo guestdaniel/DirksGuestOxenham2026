@@ -4,13 +4,13 @@ This repository contains all code necessary for completely reproducing the analy
 The code in this repository is licensed under GNU GPLv3 (see `LICENSE.txt`).
 
 ## File structure
-The file structure of this repository is shown in the file hierarchy below. Code required to generate each figure is stored in its own folder. These scripts may depend on the outputs of other scripts, usually run from the `nofig` folder with outputs stored in the `outputs` folder. Plots are always saved in the `figs` folder.
+The file structure of this repository is shown in the file hierarchy below. Code required to generate each figure is stored in its own folder. These scripts may depend on the outputs of other scripts, usually run from the `nofig` folder with outputs stored in the `outputs` folder. Plots are always saved in the `figs` folder. Note that the figure numbers are 0-indexed here but 1-indexed in the paper (so Figure 0 here is Figure 1 in the paper).
 
 ```
 .  
 ├── data/                    # Behavioral data goes here!
 ├── equations/               # LaTeX and PDF output of brief explanation of model equations
-├── fig1 /                   # Code for Figure 1
+├── fig0 /                   # Code for Figure 0
 ├── ...  
 ├── fig6/                    # Code for Figure 6
 ├── figs/                    # .png files of manuscript figures

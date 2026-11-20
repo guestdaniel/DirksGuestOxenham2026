@@ -121,31 +121,45 @@ plot_samediff_inset_distribution = function(tau=2, mu=0, sigma=1) {
 }
 
 # Plot a small schematic of hypothesized performance (% correct) like how we plot it in the paper
+# Pass intercept_same (and optionally curvature_same) to also draw the 'same' trials of the
+# same-different task; performance on those is intercept_same - curvature_same*x^2, i.e., flat when
+# curvature_same=0 and an inverted U (dropping off at either end of the CF range) when it is positive
 plot_performance_schematic = function(slope_lowhigh=0.3, slope_highlow=-0.3,
-									  intercept_lowhigh=0.5, intercept_highlow=0.5) {
+									  intercept_lowhigh=0.5, intercept_highlow=0.5,
+									  intercept_same=NA, curvature_same=0) {
     # Create a dataframe with the three positions relative to the perceptual mean
 	pos = data.frame(
 		x=c(-1, 0, 1),
 		position=factor(c('below', 'near', 'above'), levels=c('below', 'near', 'above'))
 	)
 
-    # Compute hypothesized performance for each tone order at each position
-	perf = rbind(
-		pos %>% mutate(order='Low-High', y=intercept_lowhigh + slope_lowhigh*x),
-		pos %>% mutate(order='High-Low', y=intercept_highlow + slope_highlow*x)
-	) %>% mutate(order=factor(order, levels=c('Low-High', 'High-Low')))
+    # Define each tone order's hypothesized performance as a function of position
+	order_levels = c('Low-High', 'High-Low', 'Same')
+	perf_fun = list(
+		'Low-High'=function(x) intercept_lowhigh + slope_lowhigh*x,
+		'High-Low'=function(x) intercept_highlow + slope_highlow*x,
+		'Same'=function(x) intercept_same - curvature_same*x^2
+	)
+	orders = if (is.na(intercept_same)) order_levels[1:2] else order_levels
+
+    # Evaluate at the three positions (dots) and on a fine grid (lines, so the 'same' curve is smooth)
+	grid = data.frame(x=seq(-1, 1, length.out=101))
+	perf = do.call(rbind, lapply(orders, function(o) pos %>% mutate(order=o, y=perf_fun[[o]](x)))) %>%
+		mutate(order=factor(order, levels=order_levels))
+	lines = do.call(rbind, lapply(orders, function(o) grid %>% mutate(order=o, y=perf_fun[[o]](x)))) %>%
+		mutate(order=factor(order, levels=order_levels))
 
     # Create the plot
 	ggplot(perf, aes(x=x, y=y)) +
-        # Draw the lines (dashed for Low-High, solid for High-Low, as in Figure 3)
-		geom_line(aes(group=order, linetype=order), color='black', linewidth=0.8) +
+        # Draw the lines (dashed for Low-High, solid for High-Low, as in Figure 3; dotted for Same)
+		geom_line(data=lines, aes(group=order, linetype=order), color='black', linewidth=0.8) +
 
         # Draw the dots, colored by position relative to the perceptual mean
 		geom_point(aes(fill=position), shape=21, color='black', size=3.5, stroke=0.6) +
 
         # Manually set the colors and linetypes
 		scale_fill_manual(values=c('below'='#CBB4DE', 'near'='#8E63B5', 'above'='#4B2A7B')) +
-		scale_linetype_manual(values=c('Low-High'='dashed', 'High-Low'='solid')) +
+		scale_linetype_manual(values=c('Low-High'='dashed', 'High-Low'='solid', 'Same'='dotted')) +
 
         # Scale and set themeing
 		scale_x_continuous(limits=c(-1.4, 1.4)) +
@@ -382,9 +396,15 @@ perf_width = 1.8
 perf_height = 1.6
 p_perf_ud_criterion = plot_performance_schematic(slope_lowhigh=0.3, slope_highlow=-0.3)
 p_perf_ud_sensory = plot_performance_schematic(slope_lowhigh=0.3, slope_highlow=-0.3)
+# Same-different: the 'same' trials are flat under the criterion-shift model, but under the sensory
+# bias model they drop off at either end, as the f1-hat representation is pulled away from f2 (this
+# is a second-order effect, so it is drawn shallower than the tilt in the Low-High/High-Low lines)
 p_perf_sd_criterion = plot_performance_schematic(slope_lowhigh=0, slope_highlow=0,
-												 intercept_lowhigh=0.55, intercept_highlow=0.45)
-p_perf_sd_sensory = plot_performance_schematic(slope_lowhigh=0.3, slope_highlow=-0.3)
+												 intercept_lowhigh=0.85, intercept_highlow=0.75,
+												 intercept_same=0.3, curvature_same=0)
+p_perf_sd_sensory = plot_performance_schematic(slope_lowhigh=0.25, slope_highlow=-0.25,
+											   intercept_lowhigh=0.7, intercept_highlow=0.7,
+											   intercept_same=0.3, curvature_same=0.12)
 ggsave(file.path('figs', 'fig0_perf_updown_criterion.png'), p_perf_ud_criterion, width=perf_width, height=perf_height, dpi=300, bg='white')
 ggsave(file.path('figs', 'fig0_perf_updown_sensory.png'), p_perf_ud_sensory, width=perf_width, height=perf_height, dpi=300, bg='white')
 ggsave(file.path('figs', 'fig0_perf_samediff_criterion.png'), p_perf_sd_criterion, width=perf_width, height=perf_height, dpi=300, bg='white')
